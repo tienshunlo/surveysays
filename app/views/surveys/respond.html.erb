@@ -1,0 +1,29 @@
+<h3><%= @survey.name %></h3>
+ 
+<%= nested_form_for (@survey) do |f| %>
+  
+  <% if @survey.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@survey.errors.count, "error") %> prohibited this survey from being saved:</h2>
+      <ul>
+      <% @survey.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+ 
+  <% @survey.questions.each do |question| %>
+    <li><%= question.content %></li>   
+     
+        <% question.answers.each do |answer| %>
+        
+          <li><%= f.radio_button :questions, :answers %> 
+              <%= f.label( "#{question.id}_#{answer.id}",answer.content ) %>
+          </li>
+      <% end %>
+    <% end %>
+   
+  <p><%= f.submit "Submit" %></p>
+<% end %>
+

@@ -1,0 +1,57 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Survey ID:</strong>
+  <%= @survey.id %></br>
+  <strong>Name:</strong>
+  <%= @survey.name %>
+</p>
+
+<ol>
+  <% @survey.questions.each do |question| %>
+  <li><%= question.content %></li>
+  <ul>
+  	<% question.answers.each do |answer| %>
+  	<li><%= answer.content %></li>
+  	<% end %>
+  </ul>
+  <% end %>
+</ol>
+
+
+<%= link_to 'Edit', edit_survey_path(@survey) %>
+<%= link_to 'Back', surveys_path %>
+
+
+<ol>
+  <% @survey.questions.each do |question| %>
+  <li><%= question.content %></li>
+  <ul>
+  	
+  	<%= form_for :answer do |f| %>
+  	   <% question.answers.each do |answer| %>
+  	       <li><%= f.radio_button question.id, answer.id %><%= answer.content %></li>
+  	<% end %><% end %>
+  </ul>
+  <% end %>
+</ol>
+
+
+<ol>
+  <% @survey.questions.each do |question| %>
+  <li><%= question.content %></li>
+  <ul>
+  	
+  	<%= form_for :answer do |f| %>
+  	   <% question.answers.each do |answer| %>
+  	       <li><%= f.radio_button(:quesitons, :answer) %> 
+  	       	   <%= f.label(:questions_answer, answer.content) %>
+  	       	</li>
+  	    <% end %>
+  	<% end %>
+  
+  </ul>
+  <% end %>
+</ol>
+
+
