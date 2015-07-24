@@ -3,7 +3,19 @@
 <p>
   <strong>Name:</strong>
   <%= @questionnaire.name %>
+  
 </p>
+
+<ol>
+  <% @questionnaire.surveys.each do |survey| %>
+  <li><%= survey.name %></li>
+ 
+  <% end %>
+</ol>
+
 
 <%= link_to 'Edit', edit_questionnaire_path(@questionnaire) %> |
 <%= link_to 'Back', questionnaires_path %>
+
+
+

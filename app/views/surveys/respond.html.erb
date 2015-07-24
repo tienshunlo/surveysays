@@ -16,14 +16,22 @@
   <% @survey.questions.each do |question| %>
     <li><%= question.content %></li>   
      
-        <% question.answers.each do |answer| %>
-        
-          <li><%= f.radio_button :questions, :answers %> 
-              <%= f.label( "#{question.id}_#{answer.id}",answer.content ) %>
-          </li>
-      <% end %>
-    <% end %>
+    <%# question.answers.each do |answer| %>  
+      <!-- <li> -->
+        <%#= radio_button(@survey.id, question.id, answer.id) %>
+        <%= collection_radio_buttons(question, :id, Answer.where(question_id: question.id), :id, :content )%>
+        <%#= f.radio_button question.id, answer.content %>
+        <%#= f.label( "#{question.id}_#{answer.id}",answer.content ) %>
+      <!-- </li> -->
+    <%# end %>
+  <% end %>
    
   <p><%= f.submit "Submit" %></p>
 <% end %>
 
+<%#= f.collection_radio_buttons :question_id, Answer.all, :id, :content %>
+
+<!-- radio_button(object_name, method, tag_value, options = {}) -->
+
+<!-- collection_radio_buttons(object, method, collection, value_method, text_method, options = {}, html_options = {}, &block) -->
+<!-- collection_radio_buttons(:post, :author_id, Author.all, :id, :name_with_initial) -->

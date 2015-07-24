@@ -1,0 +1,126 @@
+<!-- simple form -->
+
+
+<%= simple_form_for(@questionnaire) do |f| %>
+  <% if @questionnaire.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@questionnaire.errors.count, "error") %> prohibited this questionnaire from being saved:</h2>
+
+      <ul>
+      <% @questionnaire.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+
+
+<p>
+    <%= f.label :name %><br/>
+    <%= f.text_field :name %>
+    <%= f.association :surveys, as: :check_boxes  %>
+  </p>
+ <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+<% end %>
+
+
+<!-- nested_form -->
+
+<%= nested_form_for(@questionnaire) do |f| %>
+ 
+  <% if @questionnaire.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@questionnaire.errors.count, "error") %> prohibited this questionnaire from being saved:</h2>
+
+      <ul>
+      <% @questionnaire.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p>
+    <%= f.label :name %><br/>
+    <%= f.text_field :name %>
+  </p>
+
+  <div class="field">
+     <%= f.fields_for @surveys do |builder| %>
+       <% @surveys.each do |survey| %> 
+      <%= check_box_tag "questionnaire[surveys][name]", survey.name %>
+      <%= builder.label :name, survey.name %>
+      <% end %>
+      <% end %>   
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+<!-- 練七八糟 -->
+
+<%= nested_form_for(@questionnaire) do |f| %>
+  <% if @questionnaire.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@questionnaire.errors.count, "error") %> prohibited this questionnaire from being saved:</h2>
+
+      <ul>
+      <% @questionnaire.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+
+
+<p>
+    <%= f.label :name %><br/>
+    <%= f.text_field :name %>
+  </p>
+
+  <div class="field">
+
+    
+    <%= f.fields_for @surveys do |builder| %>
+      <% @surveys.each do |survey| %> 
+      <!-- <input type="checkbox" name="questionnaire[survey_names][]" value="<%= survey.name %>">  -->
+      <%= check_box_tag "questionnaire[surveys][name]", survey.name %>
+      <%= builder.label :name, survey.name %>
+
+
+      <% end %>
+      <% end %>
+      <%#= builder.check_box_tag 'eula', 'accepted', false, disabled: true %>
+     <!-- <input disabled="disabled" id="eula" name="eula" type="checkbox" value="accepted" /> -->
+        
+      <%# question.answers.each do |answer| %>  
+      <!-- <li> -->
+        <%#= check_box(:questionnaire, :survey_id, survey.name) %>
+        <%#= builder.check_box("puppy", "gooddog", {}, "yes", "no")%>
+        <%#= check_box( :surveys, {}, "yes", "no") %>
+        <%#= builder.check_box :questionnaire_id, "surveys.id" %>
+        <%#= check_box :questionnaire, :survey_id, survey.name %>
+        
+        <%#= radio_button(@questionnaire.id, survey.id, survey.name) %>
+        <%#= collection_radio_buttons(question, :id, Answer.where(question_id: question.id), :id, :content )%>
+        <%#= f.radio_button question.id, answer.content %>
+        <%#= builder.label(:name, surveys.name) %>
+      <!-- </li> -->
+    <%# end %>
+      
+     
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+

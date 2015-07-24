@@ -10,22 +10,31 @@ class QuestionnairesController < ApplicationController
   # GET /questionnaires/1
   # GET /questionnaires/1.json
   def show
+    
+    
   end
 
   # GET /questionnaires/new
   def new
     @questionnaire = Questionnaire.new
-    question = @questionnaire.questions.all
+    @surveys = Survey.all
+
+
   end
 
   # GET /questionnaires/1/edit
   def edit
+    @questionnaire = Questionnaire.find(params[:id])
+    #@questionnaire.questionnaire_surveys.build.build_survey
+    @surveys = Survey.all
   end
 
   # POST /questionnaires
   # POST /questionnaires.json
   def create
+    
     @questionnaire = Questionnaire.new(questionnaire_params)
+    
 
     respond_to do |format|
       if @questionnaire.save
@@ -36,6 +45,7 @@ class QuestionnairesController < ApplicationController
         format.json { render json: @questionnaire.errors, status: :unprocessable_entity }
       end
     end
+
   end
 
   # PATCH/PUT /questionnaires/1
@@ -70,6 +80,7 @@ class QuestionnairesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def questionnaire_params
-      params.require(:questionnaire).permit(:name)
+      #params.require(:questionnaire).permit(:name, questionnaire_surveys_attributes: [:id, survey_attributes:[:id]])
+      params.require(:questionnaire).permit(:name, questionnaire_surveys_attributes: [:survey_id])
     end
 end

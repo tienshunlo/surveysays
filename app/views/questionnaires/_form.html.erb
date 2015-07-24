@@ -11,22 +11,29 @@
     </div>
   <% end %>
 
-  <div class="field">
 
-    <% @questionnaire.questions.each do |question| %>
-      <%= f.label question.content %><br>
-        <ul>
-          <%= f.fields_for :answer do |builder| %>
-            <% question.answers.each do |answer| %>
-              <li>
-                <%= builder.radio_button(:quesitons, :answer, answer.content) %> 
-              </li>
-            <% end %>
-          <% end %>
-        </ul>
-    <% end %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+
+
+  <p>
+    <%= f.label :name %><br/>
+    <%= f.text_field :name %>
+    <%#= collection_check_boxes(@questionnaire, :id, Survey.all, :id, :name) %>
+    <div class="field">
+         <% @surveys.each do |survey| %> 
+            <%= check_box_tag "questionnaire[questionnaire_surveys_attributes][][survey_id]", survey.id %>
+            <%= label_tag survey.name %>
+         <% end %>
+    
+   </div>
+
+<%= ff.fields_for :survey do |survey| %>
+    <%= survey.collection_check_boxes :survey_ids, @surveys, :id, :name %>
 <% end %>
+   
+    <%#= collection_radio_buttons(question, :id, Answer.where(question_id: question.id), :id, :content )%>
+  </p>
+   <div class="actions">
+    <%= f.submit %>
+
+  </div>
+  <% end %>   
