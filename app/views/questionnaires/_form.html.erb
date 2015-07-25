@@ -17,23 +17,21 @@
   <p>
     <%= f.label :name %><br/>
     <%= f.text_field :name %>
-    <%#= collection_check_boxes(@questionnaire, :id, Survey.all, :id, :name) %>
     <div class="field">
+    <%= f.fields_for :questionnaire_surveys do |ff| %>
+       <%= ff.fields_for :survey do |builder| %>
          <% @surveys.each do |survey| %> 
-            <%= check_box_tag "questionnaire[questionnaire_surveys_attributes][][survey_id]", survey.id %>
-            <%= label_tag survey.name %>
+         <%= builder.check_box :id, {}, survey.id %>
+         <%= builder.label survey.name %>
          <% end %>
+       <% end %>   
+     <% end %>
     
    </div>
-
-<%= ff.fields_for :survey do |survey| %>
-    <%= survey.collection_check_boxes :survey_ids, @surveys, :id, :name %>
-<% end %>
-   
-    <%#= collection_radio_buttons(question, :id, Answer.where(question_id: question.id), :id, :content )%>
   </p>
+   
    <div class="actions">
     <%= f.submit %>
+   </div>
+<% end %>   
 
-  </div>
-  <% end %>   
