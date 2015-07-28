@@ -13,21 +13,20 @@
 
 
 
-
   <p>
     <%= f.label :name %><br/>
     <%= f.text_field :name %>
     <div class="field">
-    <%= f.fields_for :questionnaire_surveys do |ff| %>
+
+     <%= f.fields_for :questionnaire_surveys do |ff| %>
        <%= ff.fields_for :survey do |builder| %>
          <% @surveys.each do |survey| %> 
-         <%= builder.check_box :id, {}, survey.id %>
-         <%= builder.label survey.name %>
+           <%= builder.check_box :id, {}, survey.id %>
+           <%= builder.label survey.name %>
          <% end %>
-       <% end %>   
-     <% end %>
-    
-   </div>
+        <% end %>
+    <% end %>
+    </div>
   </p>
    
    <div class="actions">

@@ -17,7 +17,7 @@ class QuestionnairesController < ApplicationController
   # GET /questionnaires/new
   def new
     @questionnaire = Questionnaire.new
-    #@questionnaire.questionnaire_surveys.build.build_survey
+    @questionnaire.questionnaire_surveys.build.build_survey
     @surveys = Survey.all
 
 
