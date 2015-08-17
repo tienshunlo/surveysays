@@ -17,7 +17,7 @@ class QuestionnairesController < ApplicationController
   # GET /questionnaires/new
   def new
     @questionnaire = Questionnaire.new
-    @questionnaire.questionnaire_surveys.build.build_survey
+    #@questionnaire.questionnaire_surveys.build.build_survey
     @surveys = Survey.all
 
 
@@ -52,6 +52,8 @@ class QuestionnairesController < ApplicationController
   # PATCH/PUT /questionnaires/1
   # PATCH/PUT /questionnaires/1.json
   def update
+    #questionnaire[questionnaire_surveys_attributes][][survey_id]
+    #params[:questionnaire][:questionnaire_surveys_attributes] ||= []
     respond_to do |format|
       if @questionnaire.update(questionnaire_params)
         format.html { redirect_to @questionnaire, notice: 'Questionnaire was successfully updated.' }
@@ -81,7 +83,8 @@ class QuestionnairesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def questionnaire_params
-      params.require(:questionnaire).permit(:name, questionnaire_surveys_attributes: [:id, survey_attributes:[:id]])
       #params.require(:questionnaire).permit(:name, questionnaire_surveys_attributes: [:survey_id])
+      #params.require(:questionnaire).permit(:name, questionnaire_surveys_attributes:[:id, survey_attributes:[:id, :name]])
+      params.require(:questionnaire).permit(:name, :survey_ids =>[])
     end
 end

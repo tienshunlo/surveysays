@@ -17,15 +17,25 @@
     <%= f.label :name %><br/>
     <%= f.text_field :name %>
     <div class="field">
-
-     <%= f.fields_for :questionnaire_surveys do |ff| %>
-       <%= ff.fields_for :survey do |builder| %>
-         <% @surveys.each do |survey| %> 
-           <%= builder.check_box :id, {}, survey.id %>
-           <%= builder.label survey.name %>
-         <% end %>
-        <% end %>
-    <% end %>
+       <%= hidden_field_tag 'questionnaire[survey_ids][]','' %>
+       <% @surveys.each do |survey| %> 
+            <%#= check_box_tag "questionnaire[questionnaire_surveys_attributes][][survey_id]", survey.id %>
+            <%= check_box_tag "questionnaire[survey_ids][]", survey.id, @questionnaire.surveys.include?(survey) %>
+            <%= label_tag survey.name %>
+      <% end %>
+    <%#= f.fields_for :questionnaire_surveys do |ff| %>
+       <%#= ff.fields_for :survey do |builder| %>
+         <%# @surveys.each do |survey| %> 
+          <%#= collection_check_boxes(object, method, collection, value_method, text_method %>
+          <%#= builder.collection_check_boxes  :name, @surveys, 'id', 'name' %>
+          <%#= builder.collection_check_boxes :id, @surveys, :id, :name %>
+          <%#= builder.collection_check_boxes :id, @surveys, 'id', 'name' %>
+          <%#= builder.text_field :name, placeholder: survey.name %>
+          <%#= collection_radio_buttons(question, :id, Answer.where(question_id: question.id), :id, :content )%>
+          <%#= survey.collection_check_boxes :survey_ids, @surveys, :id, :name %>
+         <%# end %>
+       <%# end %>   
+     <%# end %>
     </div>
   </p>
    
